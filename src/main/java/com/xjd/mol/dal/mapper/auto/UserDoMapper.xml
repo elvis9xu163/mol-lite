@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjd.mol.dal.mapper.auto.UserDoMapper">
+  <resultMap id="BaseResultMap" type="com.xjd.mol.dal.domain.auto.UserDo">
+    <id column="user_id" property="userId" jdbcType="BIGINT"/>
+    <result column="email" property="email" jdbcType="VARCHAR"/>
+    <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+    <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+    <result column="icon_rid" property="iconRid" jdbcType="BIGINT"/>
+    <result column="grade" property="grade" jdbcType="INTEGER"/>
+    <result column="birth_day" property="birthDay" jdbcType="DATE"/>
+    <result column="birth_time" property="birthTime" jdbcType="TIME"/>
+    <result column="gender" property="gender" jdbcType="CHAR"/>
+    <result column="hometown" property="hometown" jdbcType="VARCHAR"/>
+    <result column="been_to_place" property="beenToPlace" jdbcType="VARCHAR"/>
+    <result column="current_place" property="currentPlace" jdbcType="VARCHAR"/>
+    <result column="career" property="career" jdbcType="VARCHAR"/>
+    <result column="hobby" property="hobby" jdbcType="VARCHAR"/>
+    <result column="last_login_datetime" property="lastLoginDatetime" jdbcType="TIMESTAMP"/>
+    <result column="last_login_addr" property="lastLoginAddr" jdbcType="VARCHAR"/>
+    <result column="last_login_lng" property="lastLoginLng" jdbcType="DOUBLE"/>
+    <result column="last_login_lat" property="lastLoginLat" jdbcType="DOUBLE"/>
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    <result column="upd_time" property="updTime" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_id, email, mobile, pwd, nick_name, icon_rid, grade, birth_day, birth_time, gender, 
+    hometown, been_to_place, current_place, career, hobby, last_login_datetime, last_login_addr, 
+    last_login_lng, last_login_lat, add_time, upd_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xjd.mol.dal.domain.auto.UserDoExample">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List"/>
+    from tbl_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xjd.mol.dal.domain.auto.UserDoExample">
+    delete from tbl_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xjd.mol.dal.domain.auto.UserDo">
+    <selectKey resultType="java.lang.Long" keyProperty="userId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_user (email, mobile, pwd,
+    nick_name, icon_rid, grade,
+    birth_day, birth_time, gender,
+    hometown, been_to_place, current_place,
+    career, hobby, last_login_datetime,
+    last_login_addr, last_login_lng, last_login_lat,
+    add_time, upd_time)
+    values (#{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR},
+    #{nickName,jdbcType=VARCHAR}, #{iconRid,jdbcType=BIGINT}, #{grade,jdbcType=INTEGER},
+    #{birthDay,jdbcType=DATE}, #{birthTime,jdbcType=TIME}, #{gender,jdbcType=CHAR},
+    #{hometown,jdbcType=VARCHAR}, #{beenToPlace,jdbcType=VARCHAR}, #{currentPlace,jdbcType=VARCHAR},
+    #{career,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{lastLoginDatetime,jdbcType=TIMESTAMP},
+    #{lastLoginAddr,jdbcType=VARCHAR}, #{lastLoginLng,jdbcType=DOUBLE}, #{lastLoginLat,jdbcType=DOUBLE},
+    #{addTime,jdbcType=TIMESTAMP}, #{updTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xjd.mol.dal.domain.auto.UserDo">
+    <selectKey resultType="java.lang.Long" keyProperty="userId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="email != null">
+        email,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="iconRid != null">
+        icon_rid,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="birthDay != null">
+        birth_day,
+      </if>
+      <if test="birthTime != null">
+        birth_time,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="hometown != null">
+        hometown,
+      </if>
+      <if test="beenToPlace != null">
+        been_to_place,
+      </if>
+      <if test="currentPlace != null">
+        current_place,
+      </if>
+      <if test="career != null">
+        career,
+      </if>
+      <if test="hobby != null">
+        hobby,
+      </if>
+      <if test="lastLoginDatetime != null">
+        last_login_datetime,
+      </if>
+      <if test="lastLoginAddr != null">
+        last_login_addr,
+      </if>
+      <if test="lastLoginLng != null">
+        last_login_lng,
+      </if>
+      <if test="lastLoginLat != null">
+        last_login_lat,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updTime != null">
+        upd_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="iconRid != null">
+        #{iconRid,jdbcType=BIGINT},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="birthDay != null">
+        #{birthDay,jdbcType=DATE},
+      </if>
+      <if test="birthTime != null">
+        #{birthTime,jdbcType=TIME},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="hometown != null">
+        #{hometown,jdbcType=VARCHAR},
+      </if>
+      <if test="beenToPlace != null">
+        #{beenToPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPlace != null">
+        #{currentPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="career != null">
+        #{career,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null">
+        #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginDatetime != null">
+        #{lastLoginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginAddr != null">
+        #{lastLoginAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginLng != null">
+        #{lastLoginLng,jdbcType=DOUBLE},
+      </if>
+      <if test="lastLoginLat != null">
+        #{lastLoginLat,jdbcType=DOUBLE},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xjd.mol.dal.domain.auto.UserDoExample" resultType="java.lang.Integer">
+    select count(*) from tbl_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tbl_user
+    <set>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwd != null">
+        pwd = #{record.pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconRid != null">
+        icon_rid = #{record.iconRid,jdbcType=BIGINT},
+      </if>
+      <if test="record.grade != null">
+        grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.birthDay != null">
+        birth_day = #{record.birthDay,jdbcType=DATE},
+      </if>
+      <if test="record.birthTime != null">
+        birth_time = #{record.birthTime,jdbcType=TIME},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.hometown != null">
+        hometown = #{record.hometown,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beenToPlace != null">
+        been_to_place = #{record.beenToPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentPlace != null">
+        current_place = #{record.currentPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.career != null">
+        career = #{record.career,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hobby != null">
+        hobby = #{record.hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastLoginDatetime != null">
+        last_login_datetime = #{record.lastLoginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastLoginAddr != null">
+        last_login_addr = #{record.lastLoginAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastLoginLng != null">
+        last_login_lng = #{record.lastLoginLng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lastLoginLat != null">
+        last_login_lat = #{record.lastLoginLat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updTime != null">
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause"/>
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tbl_user
+    set user_id = #{record.userId,jdbcType=BIGINT},
+    email = #{record.email,jdbcType=VARCHAR},
+    mobile = #{record.mobile,jdbcType=VARCHAR},
+    pwd = #{record.pwd,jdbcType=VARCHAR},
+    nick_name = #{record.nickName,jdbcType=VARCHAR},
+    icon_rid = #{record.iconRid,jdbcType=BIGINT},
+    grade = #{record.grade,jdbcType=INTEGER},
+    birth_day = #{record.birthDay,jdbcType=DATE},
+    birth_time = #{record.birthTime,jdbcType=TIME},
+    gender = #{record.gender,jdbcType=CHAR},
+    hometown = #{record.hometown,jdbcType=VARCHAR},
+    been_to_place = #{record.beenToPlace,jdbcType=VARCHAR},
+    current_place = #{record.currentPlace,jdbcType=VARCHAR},
+    career = #{record.career,jdbcType=VARCHAR},
+    hobby = #{record.hobby,jdbcType=VARCHAR},
+    last_login_datetime = #{record.lastLoginDatetime,jdbcType=TIMESTAMP},
+    last_login_addr = #{record.lastLoginAddr,jdbcType=VARCHAR},
+    last_login_lng = #{record.lastLoginLng,jdbcType=DOUBLE},
+    last_login_lat = #{record.lastLoginLat,jdbcType=DOUBLE},
+    add_time = #{record.addTime,jdbcType=TIMESTAMP},
+    upd_time = #{record.updTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause"/>
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xjd.mol.dal.domain.auto.UserDo">
+    update tbl_user
+    <set>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="iconRid != null">
+        icon_rid = #{iconRid,jdbcType=BIGINT},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="birthDay != null">
+        birth_day = #{birthDay,jdbcType=DATE},
+      </if>
+      <if test="birthTime != null">
+        birth_time = #{birthTime,jdbcType=TIME},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="hometown != null">
+        hometown = #{hometown,jdbcType=VARCHAR},
+      </if>
+      <if test="beenToPlace != null">
+        been_to_place = #{beenToPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPlace != null">
+        current_place = #{currentPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="career != null">
+        career = #{career,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null">
+        hobby = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginDatetime != null">
+        last_login_datetime = #{lastLoginDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginAddr != null">
+        last_login_addr = #{lastLoginAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginLng != null">
+        last_login_lng = #{lastLoginLng,jdbcType=DOUBLE},
+      </if>
+      <if test="lastLoginLat != null">
+        last_login_lat = #{lastLoginLat,jdbcType=DOUBLE},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updTime != null">
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xjd.mol.dal.domain.auto.UserDo">
+    update tbl_user
+    set email = #{email,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      icon_rid = #{iconRid,jdbcType=BIGINT},
+      grade = #{grade,jdbcType=INTEGER},
+      birth_day = #{birthDay,jdbcType=DATE},
+      birth_time = #{birthTime,jdbcType=TIME},
+      gender = #{gender,jdbcType=CHAR},
+      hometown = #{hometown,jdbcType=VARCHAR},
+      been_to_place = #{beenToPlace,jdbcType=VARCHAR},
+      current_place = #{currentPlace,jdbcType=VARCHAR},
+      career = #{career,jdbcType=VARCHAR},
+      hobby = #{hobby,jdbcType=VARCHAR},
+      last_login_datetime = #{lastLoginDatetime,jdbcType=TIMESTAMP},
+      last_login_addr = #{lastLoginAddr,jdbcType=VARCHAR},
+      last_login_lng = #{lastLoginLng,jdbcType=DOUBLE},
+      last_login_lat = #{lastLoginLat,jdbcType=DOUBLE},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      upd_time = #{updTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>
