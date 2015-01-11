@@ -9,9 +9,9 @@
     </Console>
   </Appenders>
   <Loggers>
-    <Logger name="com.xjd" level="info" />
+    <Logger name="com.xjd" level="${log.level}}" />
     <Root level="info">
-      <AppenderRef ref="file" />
+      <AppenderRef ref="${log.appenderName}" />
     </Root>
   </Loggers>
 </Configuration>

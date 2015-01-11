@@ -36,13 +36,14 @@ public class AppContext {
 			if (this.properties != null) {
 				isEnvProduct = VAL_ENV_PRODUCT.equalsIgnoreCase(this.properties.getProperty(KEY_ENV));
 			}
+			instance = this;
 			log.info("AppContext inited: isEnvProduct=[{}], properties.size=[{}], springContext=[{}]", isEnvProduct, this.properties.size(),
 					this.springContext);
 		}
 	}
 
 	public static boolean isEnvProduct() {
-		return isEnvProduct();
+		return instance.isEnvProduct;
 	}
 
 	public static ApplicationContext getSpringContext() {

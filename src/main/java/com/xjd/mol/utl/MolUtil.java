@@ -1,5 +1,6 @@
 package com.xjd.mol.utl;
 
+import com.xjd.mol.utl.context.AppContext;
 import org.apache.commons.lang3.StringUtils;
 
 public abstract class MolUtil {
@@ -11,9 +12,9 @@ public abstract class MolUtil {
 	 * @return
 	 */
 	public static boolean isPwdField(String name) {
-//		if (!AppContext.isEnvProduct()) { // 非生产环境打印密码
-//			return false;
-//		}
+		if (!AppContext.isEnvProduct()) { // 非生产环境打印密码
+			return false;
+		}
 
 		name = StringUtils.trimToNull(name);
 
@@ -24,9 +25,7 @@ public abstract class MolUtil {
 	}
 
 	/**
-	 * <pre>
 	 * 密码项的Mask
-	 * </pre>
 	 *
 	 * @return
 	 */

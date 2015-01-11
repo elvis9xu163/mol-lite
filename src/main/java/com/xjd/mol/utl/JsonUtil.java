@@ -1,5 +1,6 @@
 package com.xjd.mol.utl;
 
+import com.xjd.mol.utl.context.AppContext;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -16,11 +17,14 @@ import java.text.FieldPosition;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class JsonUtil {
 
 	protected static final String FILTER_PWD = "FilterPwd";
-	protected static TheadLocalDateFormat dateFormat = new TheadLocalDateFormat();
+	protected static ThreadLocalDateFormat dateFormat = new ThreadLocalDateFormat();
 	protected static ObjectMapper objectMapper = new ObjectMapper();
 	protected static ObjectMapper objectMapperIncludeIgnoredProperties = new ObjectMapper();
 
@@ -35,11 +39,30 @@ public abstract class JsonUtil {
 		objectMapperIncludeIgnoredProperties.setFilters(filterProvider);
 	}
 
+	public static Map forSerialize(Map map) {
+		if (!AppContext.isEnvProduct()) {
+			return map;
+		}
+		Map to = new HashMap();
+		for (Map.Entry entry : (Set<Map.Entry>) map.entrySet()) {
+			Object key = entry.getKey();
+			if (key instanceof String && MolUtil.isPwdField((String) key)) {
+				to.put(key, MolUtil.getPwdMask());
+			} else {
+				to.put(key, entry.getValue());
+			}
+		}
+		return to;
+	}
+
 	public static String toString(Object obj) {
 		return toString(obj, null);
 	}
 
 	public static String toString(Object obj, String datePattern) {
+		if (obj instanceof Map) {
+			obj = forSerialize((Map) obj);
+		}
 		dateFormat.set(datePattern);
 		try {
 			return objectMapper.writeValueAsString(obj);
@@ -53,6 +76,9 @@ public abstract class JsonUtil {
 	}
 
 	public static String toStringIncludeIgnoredProperties(Object obj, String datePattern) {
+		if (obj instanceof Map) {
+			obj = forSerialize((Map) obj);
+		}
 		dateFormat.set(datePattern);
 		try {
 			return objectMapperIncludeIgnoredProperties.writeValueAsString(obj);
@@ -61,7 +87,7 @@ public abstract class JsonUtil {
 		}
 	}
 
-	public static class TheadLocalDateFormat extends SimpleDateFormat {
+	public static class ThreadLocalDateFormat extends SimpleDateFormat {
 		private static final long serialVersionUID = -659481710224224430L;
 		protected String defaultPattern = DateUtil.PATTERN_YEAR2SECOND;
 		protected ThreadLocal<String> patternThreadLocal = new ThreadLocal<String>();
@@ -126,12 +152,24 @@ public abstract class JsonUtil {
 	}
 
 	public static class FilterPwdBeanPropertyFilter implements BeanPropertyFilter {
+
+		protected ThreadLocal<FilterPwdBeanPropertyWriter> writerThreadLocal = new InheritableThreadLocal<FilterPwdBeanPropertyWriter>();
+
+		public FilterPwdBeanPropertyWriter getWriter(BeanPropertyWriter sourceWriter) {
+			FilterPwdBeanPropertyWriter writer = writerThreadLocal.get();
+			if (writer == null) {
+				writer = new FilterPwdBeanPropertyWriter(sourceWriter);
+				writerThreadLocal.set(writer);
+			}
+			return writer;
+		}
+
 		@Override
 		public void serializeAsField(Object bean, JsonGenerator jgen, SerializerProvider prov, BeanPropertyWriter writer) throws Exception {
 			String name = writer.getName();
 
 			if (MolUtil.isPwdField(name)) {
-				FilterPwdBeanPropertyWriter filterPwdBeanPropertyWriter = new FilterPwdBeanPropertyWriter(writer);
+				FilterPwdBeanPropertyWriter filterPwdBeanPropertyWriter = getWriter(writer);
 				filterPwdBeanPropertyWriter.serializeAsField(bean, jgen, prov);
 			} else {
 				writer.serializeAsField(bean, jgen, prov);
@@ -182,4 +220,5 @@ public abstract class JsonUtil {
 		}
 
 	}
+
 }
