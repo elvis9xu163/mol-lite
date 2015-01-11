@@ -1,6 +1,7 @@
 package com.xjd.mol.app.controller;
 
 import com.xjd.mol.app.view.View;
+import com.xjd.mol.app.view.ViewUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,7 @@ public class CommonController {
 	@ResponseBody
 	public View syncTips(@RequestParam(value = "tipsKey", required = false) String tipsKey) {
 
-		return null;
+		return ViewUtil.defaultView();
 	}
 
 }
