@@ -5,8 +5,10 @@
 
 <generatorConfiguration>
   <!-- 修改：jdbc jar包 -->
+  <!--<classPathEntry
+    location="C:/Program Files (x86)/MySQL/MySQL Tools for 5.0/java/lib/mysql-connector-java-5.0.4-bin.jar"/>-->
   <classPathEntry
-    location="C:/Program Files (x86)/MySQL/MySQL Tools for 5.0/java/lib/mysql-connector-java-5.0.4-bin.jar"/>
+    location="/Users/XJD/.m2/repository/mysql/mysql-connector-java/5.1.19/mysql-connector-java-5.1.19.jar"/>
   <!-- 生成的class所在的根路径 -->
   <classPathEntry location="target/classes"/>
 
@@ -37,26 +39,39 @@
       <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
 
-    <!-- <table tableName="tbl_calendar" domainObjectName="CalendarDo">
-      <columnOverride column="week_day" javaType="java.lang.Integer" />
-      <columnOverride column="need_work" javaType="java.lang.Boolean" />
-    </table> -->
-    <table tableName="tbl_token" domainObjectName="TokenDo"/>
-    <!-- <table tableName="tbl_his_today" domainObjectName="HisTodayDo">
+    <table tableName="calendar" domainObjectName="Calendar" />
+    <table tableName="circle" domainObjectName="Circle">
+      <generatedKey column="circle_id" sqlStatement="MySql" identity="true" />
+    </table>
+    <table tableName="circle_user" domainObjectName="CircleUser" />
+    <table tableName="friend" domainObjectName="Friend" />
+    <table tableName="friend_group" domainObjectName="FriendGroup">
+      <generatedKey column="group_id" sqlStatement="MySql" identity="true" />
+    </table>
+    <table tableName="his_tag" domainObjectName="HisTag">
+      <generatedKey column="tag_id" sqlStatement="MySql" identity="true" />
+    </table>
+    <table tableName="his_today" domainObjectName="HisToday">
       <generatedKey column="evt_id" sqlStatement="MySql" identity="true" />
     </table>
-    <table tableName="tbl_moment" domainObjectName="MomentDo">
+    <table tableName="his_today_content" domainObjectName="HisTodayContent"/>
+    <table tableName="his_today_tag_relation" domainObjectName="HisTodayTagRelation"/>
+    <table tableName="moment" domainObjectName="Moment">
       <generatedKey column="mnt_id" sqlStatement="MySql" identity="true" />
     </table>
-    <table tableName="tbl_moment_user" domainObjectName="MomentUserDo">
+    <table tableName="moment_tag" domainObjectName="MomentTag">
+      <generatedKey column="tag_id" sqlStatement="MySql" identity="true" />
     </table>
-    <table tableName="tbl_resource" domainObjectName="ResourceDo">
-      <generatedKey column="mnt_id" sqlStatement="MySql" identity="true" />
+    <table tableName="moment_tag_relation" domainObjectName="MomentTagRelation" />
+    <table tableName="moment_user" domainObjectName="MomentUser" />
+    <table tableName="resource" domainObjectName="Resource">
+      <generatedKey column="res_id" sqlStatement="MySql" identity="true" />
     </table>
-    <table tableName="tbl_user" domainObjectName="UserDo">
+    <table tableName="token" domainObjectName="Token" />
+    <table tableName="user_auth" domainObjectName="UserAuth">
       <generatedKey column="user_id" sqlStatement="MySql" identity="true" />
-    </table> -->
-
+    </table>
+    <table tableName="user_info" domainObjectName="UserInfo" />
 
   </context>
 
