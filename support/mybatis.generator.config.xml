@@ -25,45 +25,53 @@
       <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="com.xjd.mol.dal.domain.auto" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="com.xjd.mol.bean" targetProject="MAVEN">
       <property name="enableSubPackages" value="true"/>
       <property name="constructorBased" value="false"/>
-      <!-- <property name="rootClass" value="com.xjd.note.dao.model.custom.BaseDo"/> -->
+       <property name="rootClass" value="com.xjd.mol.bean.BaseBean"/>
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="com.xjd.mol.dal.mapper.auto" targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="com.xjd.mol.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true"/>
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.xjd.mol.dal.mapper.auto" targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.xjd.mol.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
 
-    <table tableName="calendar" domainObjectName="Calendar" />
-    <table tableName="circle" domainObjectName="Circle">
+    <!--<table tableName="circle" domainObjectName="Circle">
       <generatedKey column="circle_id" sqlStatement="MySql" identity="true" />
+    </table>-->
+    <!--<table tableName="circle_user" domainObjectName="CircleUser" />
+      <generatedKey column="evt_id" sqlStatement="MySql" identity="true" />
+    </table>-->
+    <!--<table tableName="friend" domainObjectName="Friend">
+      <generatedKey column="evt_id" sqlStatement="MySql" identity="true" />
     </table>
-    <table tableName="circle_user" domainObjectName="CircleUser" />
-    <table tableName="friend" domainObjectName="Friend" />
     <table tableName="friend_group" domainObjectName="FriendGroup">
-      <generatedKey column="group_id" sqlStatement="MySql" identity="true" />
-    </table>
-    <table tableName="his_tag" domainObjectName="HisTag">
-      <generatedKey column="tag_id" sqlStatement="MySql" identity="true" />
+      <generatedKey column="evt_id" sqlStatement="MySql" identity="true" />
+    </table>-->
+    <!--<table tableName="calendar" domainObjectName="Calendar">
+      <columnOverride column="week_day" javaType="java.lang.Boolean"/>
+      <columnOverride column="need_work" javaType="java.lang.Boolean"/>
     </table>
     <table tableName="his_today" domainObjectName="HisToday">
       <generatedKey column="evt_id" sqlStatement="MySql" identity="true" />
     </table>
-    <table tableName="his_today_content" domainObjectName="HisTodayContent"/>
+    <table tableName="his_today_detail" domainObjectName="HisTodayDetail">
+    </table>
+    <table tableName="his_today_resource" domainObjectName="HisTodayResource">
+    </table>
     <table tableName="his_today_tag_relation" domainObjectName="HisTodayTagRelation"/>
     <table tableName="moment" domainObjectName="Moment">
       <generatedKey column="mnt_id" sqlStatement="MySql" identity="true" />
+    </table>
+    <table tableName="moment_resource" domainObjectName="MomentResource">
     </table>
     <table tableName="moment_tag" domainObjectName="MomentTag">
       <generatedKey column="tag_id" sqlStatement="MySql" identity="true" />
     </table>
     <table tableName="moment_tag_relation" domainObjectName="MomentTagRelation" />
-    <table tableName="moment_user" domainObjectName="MomentUser" />
     <table tableName="resource" domainObjectName="Resource">
       <generatedKey column="res_id" sqlStatement="MySql" identity="true" />
     </table>
@@ -71,8 +79,17 @@
     <table tableName="user_auth" domainObjectName="UserAuth">
       <generatedKey column="user_id" sqlStatement="MySql" identity="true" />
     </table>
-    <table tableName="user_info" domainObjectName="UserInfo" />
-
+      <generatedKey column="tag_id" sqlStatement="MySql" identity="true" />
+    </table>
+    <table tableName="his_today_tag" domainObjectName="HisTodayTag" />
+    <table tableName="user_info" domainObjectName="UserInfo" />-->
+    <table tableName="moment_user" domainObjectName="MomentUser">
+    </table>
+    <table tableName="moment_comment" domainObjectName="MomentComment">
+      <generatedKey column="cmt_id" sqlStatement="MySql" identity="true" />
+    </table>
+    <table tableName="moment_comment_resource" domainObjectName="MomentCommentResource">
+    </table>
   </context>
 
 </generatorConfiguration>

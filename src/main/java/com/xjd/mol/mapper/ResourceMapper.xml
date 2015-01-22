@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjd.mol.mapper.ResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.xjd.mol.bean.Resource" >
+    <id column="res_id" property="resId" jdbcType="BIGINT" />
+    <result column="res_class" property="resClass" jdbcType="CHAR" />
+    <result column="res_format" property="resFormat" jdbcType="VARCHAR" />
+    <result column="res_size" property="resSize" jdbcType="BIGINT" />
+    <result column="res_md5" property="resMd5" jdbcType="CHAR" />
+    <result column="path_type" property="pathType" jdbcType="CHAR" />
+    <result column="path_content" property="pathContent" jdbcType="VARCHAR" />
+    <result column="access_key" property="accessKey" jdbcType="CHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="upd_time" property="updTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    res_id, res_class, res_format, res_size, res_md5, path_type, path_content, access_key, 
+    add_time, upd_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xjd.mol.bean.ResourceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource
+    where res_id = #{resId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from resource
+    where res_id = #{resId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xjd.mol.bean.ResourceExample" >
+    delete from resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xjd.mol.bean.Resource" >
+    <selectKey resultType="java.lang.Long" keyProperty="resId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into resource (res_class, res_format, res_size, 
+      res_md5, path_type, path_content, 
+      access_key, add_time, upd_time
+      )
+    values (#{resClass,jdbcType=CHAR}, #{resFormat,jdbcType=VARCHAR}, #{resSize,jdbcType=BIGINT}, 
+      #{resMd5,jdbcType=CHAR}, #{pathType,jdbcType=CHAR}, #{pathContent,jdbcType=VARCHAR}, 
+      #{accessKey,jdbcType=CHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xjd.mol.bean.Resource" >
+    <selectKey resultType="java.lang.Long" keyProperty="resId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resClass != null" >
+        res_class,
+      </if>
+      <if test="resFormat != null" >
+        res_format,
+      </if>
+      <if test="resSize != null" >
+        res_size,
+      </if>
+      <if test="resMd5 != null" >
+        res_md5,
+      </if>
+      <if test="pathType != null" >
+        path_type,
+      </if>
+      <if test="pathContent != null" >
+        path_content,
+      </if>
+      <if test="accessKey != null" >
+        access_key,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updTime != null" >
+        upd_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resClass != null" >
+        #{resClass,jdbcType=CHAR},
+      </if>
+      <if test="resFormat != null" >
+        #{resFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="resSize != null" >
+        #{resSize,jdbcType=BIGINT},
+      </if>
+      <if test="resMd5 != null" >
+        #{resMd5,jdbcType=CHAR},
+      </if>
+      <if test="pathType != null" >
+        #{pathType,jdbcType=CHAR},
+      </if>
+      <if test="pathContent != null" >
+        #{pathContent,jdbcType=VARCHAR},
+      </if>
+      <if test="accessKey != null" >
+        #{accessKey,jdbcType=CHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updTime != null" >
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xjd.mol.bean.ResourceExample" resultType="java.lang.Integer" >
+    select count(*) from resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update resource
+    <set >
+      <if test="record.resId != null" >
+        res_id = #{record.resId,jdbcType=BIGINT},
+      </if>
+      <if test="record.resClass != null" >
+        res_class = #{record.resClass,jdbcType=CHAR},
+      </if>
+      <if test="record.resFormat != null" >
+        res_format = #{record.resFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resSize != null" >
+        res_size = #{record.resSize,jdbcType=BIGINT},
+      </if>
+      <if test="record.resMd5 != null" >
+        res_md5 = #{record.resMd5,jdbcType=CHAR},
+      </if>
+      <if test="record.pathType != null" >
+        path_type = #{record.pathType,jdbcType=CHAR},
+      </if>
+      <if test="record.pathContent != null" >
+        path_content = #{record.pathContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accessKey != null" >
+        access_key = #{record.accessKey,jdbcType=CHAR},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updTime != null" >
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update resource
+    set res_id = #{record.resId,jdbcType=BIGINT},
+      res_class = #{record.resClass,jdbcType=CHAR},
+      res_format = #{record.resFormat,jdbcType=VARCHAR},
+      res_size = #{record.resSize,jdbcType=BIGINT},
+      res_md5 = #{record.resMd5,jdbcType=CHAR},
+      path_type = #{record.pathType,jdbcType=CHAR},
+      path_content = #{record.pathContent,jdbcType=VARCHAR},
+      access_key = #{record.accessKey,jdbcType=CHAR},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xjd.mol.bean.Resource" >
+    update resource
+    <set >
+      <if test="resClass != null" >
+        res_class = #{resClass,jdbcType=CHAR},
+      </if>
+      <if test="resFormat != null" >
+        res_format = #{resFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="resSize != null" >
+        res_size = #{resSize,jdbcType=BIGINT},
+      </if>
+      <if test="resMd5 != null" >
+        res_md5 = #{resMd5,jdbcType=CHAR},
+      </if>
+      <if test="pathType != null" >
+        path_type = #{pathType,jdbcType=CHAR},
+      </if>
+      <if test="pathContent != null" >
+        path_content = #{pathContent,jdbcType=VARCHAR},
+      </if>
+      <if test="accessKey != null" >
+        access_key = #{accessKey,jdbcType=CHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updTime != null" >
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where res_id = #{resId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xjd.mol.bean.Resource" >
+    update resource
+    set res_class = #{resClass,jdbcType=CHAR},
+      res_format = #{resFormat,jdbcType=VARCHAR},
+      res_size = #{resSize,jdbcType=BIGINT},
+      res_md5 = #{resMd5,jdbcType=CHAR},
+      path_type = #{pathType,jdbcType=CHAR},
+      path_content = #{pathContent,jdbcType=VARCHAR},
+      access_key = #{accessKey,jdbcType=CHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      upd_time = #{updTime,jdbcType=TIMESTAMP}
+    where res_id = #{resId,jdbcType=BIGINT}
+  </update>
+</mapper>
