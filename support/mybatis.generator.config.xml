@@ -28,14 +28,14 @@
     <javaModelGenerator targetPackage="com.xjd.mol.bean" targetProject="MAVEN">
       <property name="enableSubPackages" value="true"/>
       <property name="constructorBased" value="false"/>
-       <property name="rootClass" value="com.xjd.mol.bean.BaseBean"/>
+       <property name="rootClass" value="com.xjd.mol.biz.model.BaseBean"/>
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="com.xjd.mol.mapper" targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="com.xjd.mol.dal.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true"/>
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.xjd.mol.mapper" targetProject="MAVEN">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.xjd.mol.dal.mapper" targetProject="MAVEN">
       <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
 

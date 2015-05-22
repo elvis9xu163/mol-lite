@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjd.mol.dal.mapper.MomentMapper" >
+  <resultMap id="BaseResultMap" type="com.xjd.mol.biz.model.Moment" >
+    <id column="mnt_id" property="mntId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="start_day" property="startDay" jdbcType="DATE" />
+    <result column="start_time" property="startTime" jdbcType="TIME" />
+    <result column="end_day" property="endDay" jdbcType="DATE" />
+    <result column="end_time" property="endTime" jdbcType="TIME" />
+    <result column="loc_addr" property="locAddr" jdbcType="VARCHAR" />
+    <result column="loc_lng" property="locLng" jdbcType="DOUBLE" />
+    <result column="loc_lat" property="locLat" jdbcType="DOUBLE" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
+    <result column="desc_text" property="descText" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="upd_time" property="updTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mnt_id, user_id, start_day, start_time, end_day, end_time, loc_addr, loc_lng, loc_lat, 
+    subject, desc_text, status, add_time, upd_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xjd.mol.bean.MomentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from moment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from moment
+    where mnt_id = #{mntId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from moment
+    where mnt_id = #{mntId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xjd.mol.bean.MomentExample" >
+    delete from moment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xjd.mol.biz.model.Moment" >
+    <selectKey resultType="java.lang.Long" keyProperty="mntId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into moment (user_id, start_day, start_time, 
+      end_day, end_time, loc_addr, 
+      loc_lng, loc_lat, subject, 
+      desc_text, status, add_time, 
+      upd_time)
+    values (#{userId,jdbcType=BIGINT}, #{startDay,jdbcType=DATE}, #{startTime,jdbcType=TIME}, 
+      #{endDay,jdbcType=DATE}, #{endTime,jdbcType=TIME}, #{locAddr,jdbcType=VARCHAR}, 
+      #{locLng,jdbcType=DOUBLE}, #{locLat,jdbcType=DOUBLE}, #{subject,jdbcType=VARCHAR}, 
+      #{descText,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{updTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xjd.mol.biz.model.Moment" >
+    <selectKey resultType="java.lang.Long" keyProperty="mntId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into moment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="startDay != null" >
+        start_day,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endDay != null" >
+        end_day,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="locAddr != null" >
+        loc_addr,
+      </if>
+      <if test="locLng != null" >
+        loc_lng,
+      </if>
+      <if test="locLat != null" >
+        loc_lat,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="descText != null" >
+        desc_text,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updTime != null" >
+        upd_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="startDay != null" >
+        #{startDay,jdbcType=DATE},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endDay != null" >
+        #{endDay,jdbcType=DATE},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIME},
+      </if>
+      <if test="locAddr != null" >
+        #{locAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="locLng != null" >
+        #{locLng,jdbcType=DOUBLE},
+      </if>
+      <if test="locLat != null" >
+        #{locLat,jdbcType=DOUBLE},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="descText != null" >
+        #{descText,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updTime != null" >
+        #{updTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xjd.mol.bean.MomentExample" resultType="java.lang.Integer" >
+    select count(*) from moment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update moment
+    <set >
+      <if test="record.mntId != null" >
+        mnt_id = #{record.mntId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.startDay != null" >
+        start_day = #{record.startDay,jdbcType=DATE},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIME},
+      </if>
+      <if test="record.endDay != null" >
+        end_day = #{record.endDay,jdbcType=DATE},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIME},
+      </if>
+      <if test="record.locAddr != null" >
+        loc_addr = #{record.locAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locLng != null" >
+        loc_lng = #{record.locLng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.locLat != null" >
+        loc_lat = #{record.locLat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.subject != null" >
+        subject = #{record.subject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.descText != null" >
+        desc_text = #{record.descText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updTime != null" >
+        upd_time = #{record.updTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update moment
+    set mnt_id = #{record.mntId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      start_day = #{record.startDay,jdbcType=DATE},
+      start_time = #{record.startTime,jdbcType=TIME},
+      end_day = #{record.endDay,jdbcType=DATE},
+      end_time = #{record.endTime,jdbcType=TIME},
+      loc_addr = #{record.locAddr,jdbcType=VARCHAR},
+      loc_lng = #{record.locLng,jdbcType=DOUBLE},
+      loc_lat = #{record.locLat,jdbcType=DOUBLE},
+      subject = #{record.subject,jdbcType=VARCHAR},
+      desc_text = #{record.descText,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      upd_time = #{record.updTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xjd.mol.biz.model.Moment" >
+    update moment
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="startDay != null" >
+        start_day = #{startDay,jdbcType=DATE},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endDay != null" >
+        end_day = #{endDay,jdbcType=DATE},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIME},
+      </if>
+      <if test="locAddr != null" >
+        loc_addr = #{locAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="locLng != null" >
+        loc_lng = #{locLng,jdbcType=DOUBLE},
+      </if>
+      <if test="locLat != null" >
+        loc_lat = #{locLat,jdbcType=DOUBLE},
+      </if>
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="descText != null" >
+        desc_text = #{descText,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updTime != null" >
+        upd_time = #{updTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where mnt_id = #{mntId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xjd.mol.biz.model.Moment" >
+    update moment
+    set user_id = #{userId,jdbcType=BIGINT},
+      start_day = #{startDay,jdbcType=DATE},
+      start_time = #{startTime,jdbcType=TIME},
+      end_day = #{endDay,jdbcType=DATE},
+      end_time = #{endTime,jdbcType=TIME},
+      loc_addr = #{locAddr,jdbcType=VARCHAR},
+      loc_lng = #{locLng,jdbcType=DOUBLE},
+      loc_lat = #{locLat,jdbcType=DOUBLE},
+      subject = #{subject,jdbcType=VARCHAR},
+      desc_text = #{descText,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      upd_time = #{updTime,jdbcType=TIMESTAMP}
+    where mnt_id = #{mntId,jdbcType=BIGINT}
+  </update>
+</mapper>

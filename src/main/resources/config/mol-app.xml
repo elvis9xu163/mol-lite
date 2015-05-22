@@ -14,7 +14,7 @@
   <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
     <property name="converters">
       <set>
-        <bean class="com.xjd.mol.app.component.StringToTrimmedStringConverter"/>
+        <bean class="com.xjd.mol.app.cmpnt.StringToTrimmedStringConverter"/>
       </set>
     </property>
   </bean>

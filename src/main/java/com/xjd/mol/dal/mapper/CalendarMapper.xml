@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xjd.mol.dal.mapper.CalendarMapper" >
+  <resultMap id="BaseResultMap" type="com.xjd.mol.biz.model.Calendar" >
+    <id column="solar_date" property="solarDate" jdbcType="DATE" />
+    <result column="lunar_date" property="lunarDate" jdbcType="DATE" />
+    <result column="week_day" property="weekDay" jdbcType="TINYINT" />
+    <result column="festival" property="festival" jdbcType="CHAR" />
+    <result column="need_work" property="needWork" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    solar_date, lunar_date, week_day, festival, need_work
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xjd.mol.bean.CalendarExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from calendar
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.Date" >
+    select 
+    <include refid="Base_Column_List" />
+    from calendar
+    where solar_date = #{solarDate,jdbcType=DATE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Date" >
+    delete from calendar
+    where solar_date = #{solarDate,jdbcType=DATE}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xjd.mol.bean.CalendarExample" >
+    delete from calendar
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xjd.mol.biz.model.Calendar" >
+    insert into calendar (solar_date, lunar_date, week_day, 
+      festival, need_work)
+    values (#{solarDate,jdbcType=DATE}, #{lunarDate,jdbcType=DATE}, #{weekDay,jdbcType=TINYINT}, 
+      #{festival,jdbcType=CHAR}, #{needWork,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xjd.mol.biz.model.Calendar" >
+    insert into calendar
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="solarDate != null" >
+        solar_date,
+      </if>
+      <if test="lunarDate != null" >
+        lunar_date,
+      </if>
+      <if test="weekDay != null" >
+        week_day,
+      </if>
+      <if test="festival != null" >
+        festival,
+      </if>
+      <if test="needWork != null" >
+        need_work,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="solarDate != null" >
+        #{solarDate,jdbcType=DATE},
+      </if>
+      <if test="lunarDate != null" >
+        #{lunarDate,jdbcType=DATE},
+      </if>
+      <if test="weekDay != null" >
+        #{weekDay,jdbcType=TINYINT},
+      </if>
+      <if test="festival != null" >
+        #{festival,jdbcType=CHAR},
+      </if>
+      <if test="needWork != null" >
+        #{needWork,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xjd.mol.bean.CalendarExample" resultType="java.lang.Integer" >
+    select count(*) from calendar
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update calendar
+    <set >
+      <if test="record.solarDate != null" >
+        solar_date = #{record.solarDate,jdbcType=DATE},
+      </if>
+      <if test="record.lunarDate != null" >
+        lunar_date = #{record.lunarDate,jdbcType=DATE},
+      </if>
+      <if test="record.weekDay != null" >
+        week_day = #{record.weekDay,jdbcType=TINYINT},
+      </if>
+      <if test="record.festival != null" >
+        festival = #{record.festival,jdbcType=CHAR},
+      </if>
+      <if test="record.needWork != null" >
+        need_work = #{record.needWork,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update calendar
+    set solar_date = #{record.solarDate,jdbcType=DATE},
+      lunar_date = #{record.lunarDate,jdbcType=DATE},
+      week_day = #{record.weekDay,jdbcType=TINYINT},
+      festival = #{record.festival,jdbcType=CHAR},
+      need_work = #{record.needWork,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xjd.mol.biz.model.Calendar" >
+    update calendar
+    <set >
+      <if test="lunarDate != null" >
+        lunar_date = #{lunarDate,jdbcType=DATE},
+      </if>
+      <if test="weekDay != null" >
+        week_day = #{weekDay,jdbcType=TINYINT},
+      </if>
+      <if test="festival != null" >
+        festival = #{festival,jdbcType=CHAR},
+      </if>
+      <if test="needWork != null" >
+        need_work = #{needWork,jdbcType=TINYINT},
+      </if>
+    </set>
+    where solar_date = #{solarDate,jdbcType=DATE}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xjd.mol.biz.model.Calendar" >
+    update calendar
+    set lunar_date = #{lunarDate,jdbcType=DATE},
+      week_day = #{weekDay,jdbcType=TINYINT},
+      festival = #{festival,jdbcType=CHAR},
+      need_work = #{needWork,jdbcType=TINYINT}
+    where solar_date = #{solarDate,jdbcType=DATE}
+  </update>
+</mapper>
